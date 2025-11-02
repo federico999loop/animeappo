@@ -14,6 +14,12 @@ export type Anime = {
   status?: string | null;
 };
 
+export type Episode = {
+  mal_id: number;
+  title: string;
+  aired?: string;
+};
+
 export type WatchStatus =
   | 'Watching'
   | 'Completed'

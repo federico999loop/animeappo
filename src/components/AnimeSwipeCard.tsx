@@ -21,7 +21,7 @@ export default function AnimeSwipeCard({ card }: Props) {
           <View style={styles.infoContainer}>
             <Text style={styles.year}>{card.year}</Text>
             <View style={styles.ratingContainer}>
-              <IconButton icon="star" size={16} color="#FFD700" style={{ margin: 0 }} />
+              <IconButton icon="star" size={16} iconColor="#FFD700" style={{ margin: 0 }} />
               <Text style={styles.rating}>{card.score}</Text>
             </View>
           </View>

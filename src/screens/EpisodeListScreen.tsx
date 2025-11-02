@@ -3,6 +3,7 @@ import { View, Text, FlatList, StyleSheet } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { getAnimeEpisodes } from '../services/jikan';
 import { RootStackParamList } from '../navigation/RootNavigator';
+import { Episode } from '../types';
 import { ActivityIndicator, IconButton } from 'react-native-paper';
 import theme from '../theme';
 
@@ -10,7 +11,7 @@ type Props = NativeStackScreenProps<RootStackParamList, 'EpisodeList'>;
 
 export default function EpisodeListScreen({ route }: Props) {
   const { animeId } = route.params;
-  const [episodes, setEpisodes] = useState([]);
+  const [episodes, setEpisodes] = useState<Episode[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -65,19 +66,19 @@ const styles = StyleSheet.create({
     borderBottomColor: theme.colors.surface,
   },
   episodeNumber: {
-    ...theme.typography.mediumHeading,
-    color: theme.colors.muted,
+    ...theme.typography.subtitle1,
+    color: theme.colors.textSecondary,
     marginRight: theme.spacing.md,
-  },
+  } as const,
   episodeDetails: {
     flex: 1,
   },
   episodeTitle: {
-    ...theme.typography.body,
+    ...theme.typography.body1,
     color: theme.colors.text,
   },
   episodeAired: {
     ...theme.typography.caption,
-    color: theme.colors.muted,
+    color: theme.colors.textSecondary,
   },
 });

@@ -78,7 +78,7 @@ export default function FavoritesScreen() {
                   <Button compact mode="contained" onPress={() => onProgress(item.id, Math.max(0, item.progress - 1))}>-</Button>
                   <Button compact mode="contained" onPress={() => onProgress(item.id, item.totalEpisodes ? Math.min(item.totalEpisodes, item.progress + 1) : item.progress + 1)}>+</Button>
                   <Button compact mode="contained" onPress={() => onStatus(item.id, 'Completed')}>✓</Button>
-                  <Button compact mode="contained" icon="delete" onPress={() => onRemove(item.id)} />
+                  <Button compact mode="contained" icon="delete" onPress={() => onRemove(item.id)}>Delete</Button>
                 </Row>
                 <Text variant="bodySmall">Stato: {item.status}</Text>
               </View>

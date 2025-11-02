@@ -1,10 +1,10 @@
-import { useEffect, useState } from 'react';
-import { Image, ScrollView, View, Animated, StyleSheet, Dimensions } from 'react-native';
-import { useRef } from 'react';
+import { useEffect, useState, useRef } from 'react';
+import { Image, ScrollView, View, StyleSheet, Dimensions } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../navigation/RootNavigator';
 import { getAnimeById } from '../services/jikan';
 import { Anime } from '../types';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {
   addRating,
   getRating,
@@ -13,31 +13,34 @@ import {
   toggleLike,
   isLiked,
 } from '../storage/watchlist';
-import { ActivityIndicator, Button, Chip, Text, IconButton } from 'react-native-paper';
+import { ActivityIndicator, Chip, Text, IconButton } from 'react-native-paper';
+import CustomButton from '../components/CustomButton';
 import StarRating from '../components/StarRating';
 import { TabView, SceneMap, TabBar } from 'react-native-tab-view';
 import { LinearGradient } from 'expo-linear-gradient';
 import theme from '../theme';
 
-const lightTheme = {
-  ...theme,
-  colors: {
-    ...theme.colors,
-    background: '#FFFFFF',
-    surface: '#F5F5F5',
-    text: '#000000',
-    muted: '#8E8E93',
-  },
-};
-
 type Props = NativeStackScreenProps<RootStackParamList, 'Details'>;
 
-const GeneralTab = ({ anime, loading }) => (
+type TabProps = {
+  anime: Anime;
+  loading?: boolean;
+};
+
+const GeneralTab = ({ anime, loading }: TabProps) => (
   <View style={styles.tabContainer}>
     {loading ? (
       <ActivityIndicator style={{ marginVertical: 12 }} />
     ) : (
-      <Text style={{ ...lightTheme.typography.body, color: lightTheme.colors.text, lineHeight: 22 }}>
+      <Text
+        style={[
+          theme.typography.body1,
+          {
+            color: theme.colors.text,
+            lineHeight: 22,
+          },
+        ]}
+      >
         {anime.synopsis || 'Nessuna sinossi disponibile.'}
       </Text>
     )}
@@ -46,11 +49,11 @@ const GeneralTab = ({ anime, loading }) => (
 
 const CastTab = () => (
   <View style={styles.tabContainer}>
-    <Text style={{ color: lightTheme.colors.text }}>Cast information will be here.</Text>
+    <Text style={[theme.typography.body1, { color: theme.colors.text }]}>Cast information will be here.</Text>
   </View>
 );
 
-const CommentsTab = ({ anime }) => {
+const CommentsTab = ({ anime }: TabProps) => {
   const [comments, setComments] = useState<string[]>([]);
   const [newComment, setNewComment] = useState('');
 
@@ -71,7 +74,9 @@ const CommentsTab = ({ anime }) => {
   return (
     <View style={styles.tabContainer}>
       {comments.map((comment, index) => (
-        <Text key={index} style={{ color: lightTheme.colors.text, marginBottom: 8 }}>- {comment}</Text>
+        <Text key={index} style={[theme.typography.body2, { color: theme.colors.text, marginBottom: 8 }]}>
+          - {comment}
+        </Text>
       ))}
       {/* Comment input will be added here */}
     </View>
@@ -80,7 +85,7 @@ const CommentsTab = ({ anime }) => {
 
 const ListsTab = () => (
   <View style={styles.tabContainer}>
-    <Text style={{ color: lightTheme.colors.text }}>Lists information will be here.</Text>
+    <Text style={[theme.typography.body1, { color: theme.colors.text }]}>Lists information will be here.</Text>
   </View>
 );
 
@@ -113,7 +118,7 @@ export default function DetailsScreen({ route }: Props) {
         const full = await getAnimeById(initial.mal_id);
         setAnime(full.data as Anime);
       } catch {
-        // resta coi dati iniziali
+        // keep initial data
       } finally {
         setLoading(false);
       }
@@ -141,13 +146,10 @@ export default function DetailsScreen({ route }: Props) {
   const image = anime.images?.jpg?.large_image_url || anime.images?.jpg?.image_url;
 
   return (
-    <ScrollView style={{ flex: 1, backgroundColor: lightTheme.colors.background }}>
+    <ScrollView style={{ flex: 1, backgroundColor: theme.colors.background }}>
       <View style={styles.heroContainer}>
         <Image source={{ uri: image }} style={styles.heroImage} />
-        <LinearGradient
-          colors={['transparent', 'rgba(0,0,0,0.8)']}
-          style={styles.heroGradient}
-        />
+        <LinearGradient colors={['transparent', 'rgba(0,0,0,0.8)']} style={styles.heroGradient} />
         <View style={styles.heroContent}>
           <Text style={styles.heroTitle}>{anime.title}</Text>
         </View>
@@ -158,21 +160,34 @@ export default function DetailsScreen({ route }: Props) {
           <Text style={styles.metaText}>{anime.year}</Text>
           <Text style={styles.metaText}>{anime.episodes} episodes</Text>
           <View style={styles.ratingContainer}>
-            <MaterialCommunityIcons name="star" color="#FFD700" size={16} />
+            <MaterialCommunityIcons name="star" color={theme.colors.warning} size={16} />
             <Text style={styles.metaText}>{anime.score}</Text>
           </View>
         </View>
 
         <View style={styles.actionsRow}>
-          <IconButton icon="bookmark-outline" size={24} onPress={() => {}} />
-          <IconButton icon={liked ? 'heart' : 'heart-outline'} iconColor={liked ? theme.colors.primary : lightTheme.colors.text} size={24} onPress={onToggleLike} />
-          <IconButton icon="eye-outline" size={24} onPress={() => {}} />
-          <IconButton icon="comment-outline" size={24} onPress={() => {}} />
+          <IconButton icon="bookmark-outline" size={24} onPress={() => {}} iconColor={theme.colors.text} />
+          <IconButton
+            icon={liked ? 'heart' : 'heart-outline'}
+            iconColor={liked ? theme.colors.primary : theme.colors.text}
+            size={24}
+            onPress={onToggleLike}
+          />
+          <IconButton icon="eye-outline" size={24} onPress={() => {}} iconColor={theme.colors.text} />
+          <IconButton icon="comment-outline" size={24} onPress={() => {}} iconColor={theme.colors.text} />
         </View>
 
         <View style={styles.buttonRow}>
-          <Button mode="outlined" onPress={() => {}} style={styles.button} textColor={lightTheme.colors.primary}>Watching</Button>
-          <Button mode="contained" onPress={() => {}} style={styles.button} buttonColor={lightTheme.colors.primary}>Review</Button>
+          <View style={styles.button}>
+            <CustomButton mode="outlined" onPress={() => {}} textStyle={{}} style={{ borderColor: theme.colors.primary }}>
+              Watching
+            </CustomButton>
+          </View>
+          <View style={styles.button}>
+            <CustomButton mode="contained" onPress={() => {}}>
+              Review
+            </CustomButton>
+          </View>
         </View>
 
         <TabView
@@ -180,14 +195,25 @@ export default function DetailsScreen({ route }: Props) {
           renderScene={renderScene}
           onIndexChange={setIndex}
           initialLayout={{ width: Dimensions.get('window').width }}
-          renderTabBar={props => 
-            <TabBar 
-              {...props} 
-              style={{ backgroundColor: lightTheme.colors.background, shadowOpacity: 0, elevation: 0 }}
-              indicatorStyle={{ backgroundColor: lightTheme.colors.primary }}
-              labelStyle={{ color: lightTheme.colors.text, ...lightTheme.typography.body }}
+          style={{ backgroundColor: theme.colors.background }}
+          renderTabBar={props => (
+            <TabBar
+              {...props}
+              style={{
+                backgroundColor: theme.colors.surface,
+                shadowOpacity: 0,
+                elevation: 0,
+                borderBottomWidth: 1,
+                borderBottomColor: theme.colors.border,
+              }}
+              indicatorStyle={{
+                backgroundColor: theme.colors.primary,
+                height: 3,
+              }}
+              android_ripple={{ borderless: true }}
+              pressOpacity={0.7}
             />
-          }
+          )}
         />
       </View>
     </ScrollView>
@@ -204,7 +230,8 @@ const styles = StyleSheet.create({
   heroImage: {
     width: '100%',
     height: '100%',
-  },
+    overflow: 'hidden',
+  } as const,
   heroGradient: {
     position: 'absolute',
     left: 0,
@@ -219,9 +246,9 @@ const styles = StyleSheet.create({
     bottom: theme.spacing.md,
   },
   heroTitle: {
-    ...lightTheme.typography.largeTitle,
-    color: lightTheme.colors.text,
-  },
+    ...theme.typography.h1,
+    color: theme.colors.text,
+  } as const,
   contentContainer: {
     padding: theme.spacing.md,
   },
@@ -231,30 +258,46 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingVertical: theme.spacing.md,
     borderBottomWidth: 1,
-    borderBottomColor: '#E0E0E0',
+    borderBottomColor: theme.colors.border,
   },
   metaText: {
-    ...lightTheme.typography.body,
-    color: lightTheme.colors.muted,
+    ...theme.typography.body2,
+    color: theme.colors.textSecondary,
   },
   ratingContainer: {
     flexDirection: 'row',
     alignItems: 'center',
+    gap: theme.spacing.xs,
   },
   actionsRow: {
     flexDirection: 'row',
     justifyContent: 'space-around',
     paddingVertical: theme.spacing.md,
     borderBottomWidth: 1,
-    borderBottomColor: '#E0E0E0',
+    borderBottomColor: theme.colors.border,
   },
   buttonRow: {
     flexDirection: 'row',
     justifyContent: 'space-around',
     paddingVertical: theme.spacing.md,
+    gap: theme.spacing.md,
   },
   button: {
     flex: 1,
-    marginHorizontal: theme.spacing.sm,
+  },
+  tabBar: {
+    backgroundColor: theme.colors.surface,
+    borderBottomWidth: 1,
+    borderBottomColor: theme.colors.border,
+    elevation: 0,
+    shadowOpacity: 0,
+  },
+  tabIndicator: {
+    backgroundColor: theme.colors.primary,
+    height: 3,
+  },
+  tabLabel: {
+    ...theme.typography.button,
+    textTransform: 'none',
   },
 });
