@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import { View, Text, Image, StyleSheet } from 'react-native';
 import { BlurView } from '@react-native-community/blur';
 import { Anime } from '../types';

@@ -1,3 +1,4 @@
+import * as React from 'react';
 import { useEffect, useState } from 'react';
 import { View, FlatList, useWindowDimensions, ScrollView } from 'react-native';
 import { ActivityIndicator, Text } from 'react-native-paper';
@@ -69,9 +70,9 @@ export default function HomeScreen() {
               }}
             />
             <Section title="In Evidenza">
-              <Swiper
-                cards={popularAnimes}
-                renderCard={(card) => <AnimeSwipeCard card={card} />}
+      <Swiper
+        cards={popularAnimes}
+                renderCard={(card) => React.createElement(AnimeSwipeCard, { card: card as Anime })}
                 cardIndex={0}
                 backgroundColor={theme.colors.background}
                 stackSize={3}
