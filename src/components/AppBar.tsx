@@ -13,24 +13,27 @@ type Props = {
   transparent?: boolean;
 };
 
-export default function AppBar({ 
-  title, 
-  leftIcon, 
-  rightIcon, 
-  onLeftPress, 
+export default function AppBar({
+  title,
+  leftIcon,
+  rightIcon,
+  onLeftPress,
   onRightPress,
   transparent = false
 }: Props) {
   const insets = useSafeAreaInsets();
-  
+  const statusBarStyle = theme.dark ? 'light-content' : 'dark-content';
+
   return (
     <>
-      <StatusBar barStyle="light-content" />
+      <StatusBar barStyle={statusBarStyle} />
       <View style={[
         styles.container,
         {
           paddingTop: insets.top,
-          backgroundColor: transparent ? 'transparent' : theme.colors.background,
+          backgroundColor: transparent ? 'transparent' : theme.colors.elevation.level1,
+          borderBottomWidth: transparent ? 0 : StyleSheet.hairlineWidth,
+          borderBottomColor: transparent ? 'transparent' : theme.colors.border,
         },
         transparent && styles.transparent
       ]}>
