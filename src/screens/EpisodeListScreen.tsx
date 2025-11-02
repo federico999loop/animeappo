@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, FlatList, StyleSheet } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { getAnimeEpisodes } from '../services/jikan';
 import { RootStackParamList } from '../navigation/RootNavigator';
@@ -28,27 +29,27 @@ export default function EpisodeListScreen({ route }: Props) {
     })();
   }, [animeId]);
 
-  if (loading) {
-    return <ActivityIndicator style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }} />;
-  }
-
   return (
-    <View style={styles.container}>
-      <FlatList
-        data={episodes}
-        keyExtractor={(item) => item.mal_id.toString()}
-        renderItem={({ item }) => (
-          <View style={styles.episodeContainer}>
-            <Text style={styles.episodeNumber}>{item.mal_id}</Text>
-            <View style={styles.episodeDetails}>
-              <Text style={styles.episodeTitle}>{item.title}</Text>
-              <Text style={styles.episodeAired}>{item.aired}</Text>
+    <SafeAreaView style={styles.container} edges={['top', 'right', 'left', 'bottom']}>
+      {loading ? (
+        <ActivityIndicator style={styles.loader} />
+      ) : (
+        <FlatList
+          data={episodes}
+          keyExtractor={(item) => item.mal_id.toString()}
+          renderItem={({ item }) => (
+            <View style={styles.episodeContainer}>
+              <Text style={styles.episodeNumber}>{item.mal_id}</Text>
+              <View style={styles.episodeDetails}>
+                <Text style={styles.episodeTitle}>{item.title}</Text>
+                <Text style={styles.episodeAired}>{item.aired}</Text>
+              </View>
+              <IconButton icon="play-circle-outline" size={24} onPress={() => {}} />
             </View>
-            <IconButton icon="play-circle-outline" size={24} onPress={() => {}} />
-          </View>
-        )}
-      />
-    </View>
+          )}
+        />
+      )}
+    </SafeAreaView>
   );
 }
 
@@ -57,6 +58,11 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: theme.colors.background,
     padding: theme.spacing.md,
+  },
+  loader: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   episodeContainer: {
     flexDirection: 'row',

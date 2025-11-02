@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { useEffect, useState } from 'react';
 import { View, FlatList, useWindowDimensions, ScrollView } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { ActivityIndicator, Text } from 'react-native-paper';
 import Swiper from 'react-native-deck-swiper';
 import PosterCard from '../components/PosterCard';
@@ -41,10 +42,22 @@ export default function HomeScreen() {
     })();
   }, []);
 
-  if (loading) return <ActivityIndicator style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }} />;
+  if (loading) {
+    return (
+      <SafeAreaView
+        style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: theme.colors.background }}
+        edges={['left', 'right', 'bottom']}
+      >
+        <ActivityIndicator />
+      </SafeAreaView>
+    );
+  }
 
   return (
-    <View style={{ flex: 1, backgroundColor: theme.colors.background }}>
+    <SafeAreaView
+      style={{ flex: 1, backgroundColor: theme.colors.background }}
+      edges={['left', 'right', 'bottom']}
+    >
       <AppBar 
         title="Anime"
         rightIcon="magnify"
@@ -171,7 +184,7 @@ export default function HomeScreen() {
           />
         </Section>
       </ScrollView>
-    </View>
+    </SafeAreaView>
   );
 }
 

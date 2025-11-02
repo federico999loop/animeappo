@@ -1,5 +1,6 @@
 import { useCallback, useRef, useState } from 'react';
-import { FlatList, View } from 'react-native';
+import { FlatList } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { ActivityIndicator, Text, TextInput, useTheme } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
 import { Anime } from '../types';
@@ -43,7 +44,10 @@ export default function SearchScreen() {
   const debounced = useDebouncedCallback(doSearch, 400);
 
   return (
-    <View style={{ flex: 1, padding: 12, backgroundColor: theme.colors.background }}>
+    <SafeAreaView
+      style={{ flex: 1, padding: 12, backgroundColor: theme.colors.background }}
+      edges={['top', 'right', 'left', 'bottom']}
+    >
       <TextInput
         placeholder="Cerca un anime (es. One Piece)…"
         value={query}
@@ -69,6 +73,6 @@ export default function SearchScreen() {
         )}
         contentContainerStyle={{ paddingVertical: 6 }}
       />
-    </View>
+    </SafeAreaView>
   );
 }

@@ -1,5 +1,6 @@
 import { useEffect, useState, useRef } from 'react';
 import { Image, ScrollView, View, StyleSheet, Dimensions } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../navigation/RootNavigator';
 import { getAnimeById } from '../services/jikan';
@@ -146,8 +147,12 @@ export default function DetailsScreen({ route }: Props) {
   const image = anime.images?.jpg?.large_image_url || anime.images?.jpg?.image_url;
 
   return (
-    <ScrollView style={{ flex: 1, backgroundColor: theme.colors.background }}>
-      <View style={styles.heroContainer}>
+    <SafeAreaView
+      style={{ flex: 1, backgroundColor: theme.colors.background }}
+      edges={['top', 'right', 'left', 'bottom']}
+    >
+      <ScrollView style={{ flex: 1, backgroundColor: theme.colors.background }}>
+        <View style={styles.heroContainer}>
         <Image source={{ uri: image }} style={styles.heroImage} />
         <LinearGradient colors={['transparent', 'rgba(0,0,0,0.8)']} style={styles.heroGradient} />
         <View style={styles.heroContent}>
@@ -216,7 +221,8 @@ export default function DetailsScreen({ route }: Props) {
           )}
         />
       </View>
-    </ScrollView>
+      </ScrollView>
+    </SafeAreaView>
   );
 }
 
