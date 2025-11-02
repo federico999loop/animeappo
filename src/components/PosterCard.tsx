@@ -76,7 +76,7 @@ export default function PosterCard({ item, onPress, width = 160 }: Props) {
           )}
           
           <LinearGradient
-            colors={['rgba(12,10,16,0)', 'rgba(12,10,16,0.85)']}
+            colors={['rgba(12,10,16,0)', 'rgba(12,10,16,0.85)'] as const}
             style={{
               position: 'absolute',
               bottom: 0,

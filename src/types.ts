@@ -12,6 +12,7 @@ export type Anime = {
   synopsis?: string | null;
   year?: number | null;
   status?: string | null;
+  genres?: Array<{ name: string }>;
 };
 
 export type Episode = {

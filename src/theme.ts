@@ -33,10 +33,10 @@ const darkTheme = {
       level3: 'rgba(28, 23, 35, 0.95)',
     },
     gradients: {
-      background: ['#141217', '#1e1422', '#241428'],
-      card: ['rgba(20, 18, 23, 0.6)', 'rgba(20, 18, 23, 0.1)'],
-      accent: [baseColors.primaryGradientStart, baseColors.primaryGradientEnd],
-      glass: ['rgba(255, 255, 255, 0.12)', 'rgba(255, 255, 255, 0.02)'],
+      background: ['#141217', '#1e1422', '#241428'] as const,
+      card: ['rgba(20, 18, 23, 0.6)', 'rgba(20, 18, 23, 0.1)'] as const,
+      accent: [baseColors.primaryGradientStart, baseColors.primaryGradientEnd] as const,
+      glass: ['rgba(255, 255, 255, 0.12)', 'rgba(255, 255, 255, 0.02)'] as const,
     },
   },
 };
@@ -61,10 +61,10 @@ const lightTheme = {
       level3: '#f2ecf6',
     },
     gradients: {
-      background: ['#fdf7fd', '#fbe6f4', '#f6d7f1'],
-      card: ['rgba(255, 255, 255, 0.9)', 'rgba(255, 255, 255, 0.4)'],
-      accent: [baseColors.primaryGradientStart, baseColors.primaryGradientEnd],
-      glass: ['rgba(255, 255, 255, 0.8)', 'rgba(255, 255, 255, 0.2)'],
+      background: ['#fdf7fd', '#fbe6f4', '#f6d7f1'] as const,
+      card: ['rgba(255, 255, 255, 0.9)', 'rgba(255, 255, 255, 0.4)'] as const,
+      accent: [baseColors.primaryGradientStart, baseColors.primaryGradientEnd] as const,
+      glass: ['rgba(255, 255, 255, 0.8)', 'rgba(255, 255, 255, 0.2)'] as const,
     },
   },
 };

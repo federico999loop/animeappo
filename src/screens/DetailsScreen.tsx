@@ -154,7 +154,7 @@ export default function DetailsScreen({ route }: Props) {
       <ScrollView style={{ flex: 1, backgroundColor: theme.colors.background }}>
         <View style={styles.heroContainer}>
         <Image source={{ uri: image }} style={styles.heroImage} />
-        <LinearGradient colors={['transparent', 'rgba(0,0,0,0.8)']} style={styles.heroGradient} />
+        <LinearGradient colors={['transparent', 'rgba(0,0,0,0.8)'] as const} style={styles.heroGradient} />
         <View style={styles.heroContent}>
           <Text style={styles.heroTitle}>{anime.title}</Text>
         </View>

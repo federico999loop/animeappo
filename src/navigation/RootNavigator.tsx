@@ -31,10 +31,13 @@ export type BottomTabParamList = {
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 const Tab = createBottomTabNavigator<BottomTabParamList>();
+const TabNavigator: any = Tab.Navigator;
+const StackNavigator: any = Stack.Navigator;
 
 function Tabs() {
   return (
-    <Tab.Navigator
+    <TabNavigator
+      id="TabsRoot"
       screenOptions={{
         headerShown: false,
         tabBarShowLabel: false,
@@ -140,13 +143,14 @@ function Tabs() {
           ),
         }}
       />
-    </Tab.Navigator>
+    </TabNavigator>
   );
 }
 
 export default function RootNavigator() {
   return (
-    <Stack.Navigator
+    <StackNavigator
+      id="RootStack"
       screenOptions={{
         headerStyle: {
           backgroundColor: theme.colors.surface,
@@ -178,6 +182,6 @@ export default function RootNavigator() {
         component={EpisodeListScreen}
         options={{ title: 'Episodi' }}
       />
-    </Stack.Navigator>
+    </StackNavigator>
   );
 }

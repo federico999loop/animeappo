@@ -346,7 +346,7 @@ function FeaturedCard({ anime, height, onPress }: { anime: Anime; height: number
             imageStyle={{ borderRadius: theme.radii.xl }}
           >
             <LinearGradient
-              colors={['rgba(20,18,23,0.1)', 'rgba(20,18,23,0.65)', 'rgba(20,18,23,0.95)']}
+              colors={['rgba(20,18,23,0.1)', 'rgba(20,18,23,0.65)', 'rgba(20,18,23,0.95)'] as const}
               style={{ padding: theme.spacing.xl, gap: theme.spacing.md }}
             >
               <View>
