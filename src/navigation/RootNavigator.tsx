@@ -9,9 +9,10 @@ import ProfileScreen from '../screens/ProfileScreen';
 import AddScreen from '../screens/AddScreen';
 import EpisodeListScreen from '../screens/EpisodeListScreen';
 import { Anime } from '../types';
-import { View, TouchableOpacity } from 'react-native';
+import { TouchableOpacity } from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import theme from '../theme';
+import { LinearGradient } from 'expo-linear-gradient';
 
 export type RootStackParamList = {
   Tabs: undefined;
@@ -38,12 +39,30 @@ function Tabs() {
         headerShown: false,
         tabBarShowLabel: false,
         tabBarStyle: {
-          backgroundColor: theme.colors.surface,
+          position: 'absolute',
+          left: theme.spacing.lg,
+          right: theme.spacing.lg,
+          bottom: theme.spacing.md,
+          backgroundColor: 'transparent',
           borderTopWidth: 0,
           elevation: 0,
+          borderRadius: theme.radii.xl,
+          height: 76,
+          paddingHorizontal: theme.spacing.lg,
         },
+        tabBarBackground: () => (
+          <LinearGradient
+            colors={theme.colors.gradients.card}
+            start={{ x: 0, y: 0 }}
+            end={{ x: 1, y: 1 }}
+            style={{ flex: 1, borderRadius: theme.radii.xl }}
+          />
+        ),
         tabBarActiveTintColor: theme.colors.primary,
         tabBarInactiveTintColor: theme.colors.muted,
+        tabBarItemStyle: {
+          marginTop: theme.spacing.sm,
+        },
       }}
     >
       <Tab.Screen
@@ -68,27 +87,38 @@ function Tabs() {
         name="Add"
         component={AddScreen}
         options={{
-          tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons name="plus" color={theme.colors.text} size={size} />
-          ),
           tabBarButton: (props) => (
             <TouchableOpacity
               {...(props as any)}
               style={{
-                top: -20,
+                top: -28,
                 justifyContent: 'center',
                 alignItems: 'center',
-                width: 60,
-                height: 60,
-                borderRadius: 30,
-                backgroundColor: theme.colors.primary,
-                shadowColor: theme.colors.primary,
-                shadowOffset: { width: 0, height: 5 },
-                shadowOpacity: 0.5,
-                shadowRadius: 5,
-                elevation: 5,
+                width: 74,
+                height: 74,
+                borderRadius: 37,
               }}
-            />
+            >
+              <LinearGradient
+                colors={theme.colors.gradients.accent}
+                start={{ x: 0, y: 0 }}
+                end={{ x: 1, y: 1 }}
+                style={{
+                  width: '100%',
+                  height: '100%',
+                  borderRadius: 37,
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  shadowColor: theme.colors.primary,
+                  shadowOffset: { width: 0, height: 6 },
+                  shadowOpacity: 0.4,
+                  shadowRadius: 12,
+                  elevation: 8,
+                }}
+              >
+                <MaterialCommunityIcons name="plus" color={theme.colors.white} size={30} />
+              </LinearGradient>
+            </TouchableOpacity>
           ),
         }}
       />
