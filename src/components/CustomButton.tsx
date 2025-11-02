@@ -1,13 +1,13 @@
 import React from 'react';
-import { Pressable, Text, StyleSheet, ViewStyle, TextStyle } from 'react-native';
+import { Pressable, Text, StyleSheet, ViewStyle, TextStyle, StyleProp } from 'react-native';
 import theme from '../theme';
 
 type Props = {
   onPress: () => void;
   children: string;
   mode?: 'contained' | 'outlined';
-  style?: ViewStyle;
-  textStyle?: TextStyle;
+  style?: StyleProp<ViewStyle>;
+  textStyle?: StyleProp<TextStyle>;
   disabled?: boolean;
 };
 
